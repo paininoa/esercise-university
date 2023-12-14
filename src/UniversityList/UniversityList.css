@@ -1,0 +1,9 @@
+.card {
+  padding: 2rem;
+  color: white;
+  background-color: #000682;
+  border-radius: 1rem;
+}
+* {
+  text-decoration: none;
+}

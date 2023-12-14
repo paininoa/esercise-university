@@ -1,0 +1,17 @@
+import { useState } from "react";
+
+export default ({ handleChange, handleClick, search, handleSort }) => {
+  console.log(search);
+  return (
+    <>
+      <h2>Search a UNI</h2>
+      <input
+        type="text"
+        value={search}
+        onChange={(e) => handleChange(e.target.value)}
+      />
+      <button onClick={handleClick}>Search</button>
+      <button onClick={handleSort}>Sort alphabetically</button>
+    </>
+  );
+};
