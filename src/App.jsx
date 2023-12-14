@@ -5,7 +5,7 @@ import SearchBar from "./SearchBar/SearchBar";
 
 function App() {
   const [universities, setUniversities] = useState([]);
-  const [search, setSearch] = useState();
+  const [search, setSearch] = useState("");
   const [filteredUni, setFilteredUni] = useState([]);
   const [count, setCount] = useState(0);
 

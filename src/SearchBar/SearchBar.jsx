@@ -10,7 +10,12 @@ export default ({ handleChange, handleClick, search, handleSort }) => {
         value={search}
         onChange={(e) => handleChange(e.target.value)}
       />
-      <button onClick={handleClick}>Search</button>
+      <button
+        onClick={handleClick}
+        disabled={search.trim() === "" ? true : false}
+      >
+        Search
+      </button>
       <button onClick={handleSort}>Sort alphabetically</button>
     </>
   );
