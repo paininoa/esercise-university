@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 export default ({ handleChange, handleClick, search, handleSort }) => {
-  console.log(search);
   return (
     <>
       <h2>Search a UNI</h2>

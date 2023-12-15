@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import UniversityList from "./UniversityList/UniversityList";
 import SearchBar from "./SearchBar/SearchBar";
+import App2 from "./2ndTryWholeExercise/App2";
 
 function App() {
   const [universities, setUniversities] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredUni, setFilteredUni] = useState([]);
   const [count, setCount] = useState(0);
+  const [error, setError] = useState("");
 
   const handleChange = (searchValue) => {
     setSearch(searchValue);
@@ -19,7 +21,6 @@ function App() {
     const newList = universities.filter(({ name }) =>
       name.toLowerCase().includes(search.toLowerCase())
     );
-
     setFilteredUni(newList);
   };
 
@@ -34,21 +35,25 @@ function App() {
         return 1;
       }
     });
-    setFilteredUni([...sortedList]); // SERVE A FAR RICARICARE L'OGGETTO FILTRATO CHE ALTRIMENTI NON MOSTRA IL SORT
+    setFilteredUni([...sortedList]); // LO SPREAD SERVE A FAR RICARICARE L'ARRAY FILTRATO CHE ALTRIMENTI NON MOSTRA IL SORT
   };
 
-  console.log("sortedList changed", filteredUni);
+  // console.log("sortedList changed", filteredUni);
 
   const fetchUni = async () => {
     try {
       const response = await fetch(
         "http://universities.hipolabs.com/search?country=Italy"
       );
+      if (response.status !== 200) {
+        throw new Error("Fetch error");
+      }
       const obj = await response.json();
       setUniversities(obj);
       setFilteredUni(obj);
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
+      setError(err);
     }
   };
 
@@ -58,24 +63,30 @@ function App() {
 
   return (
     <>
-      <h4>{`Counter: ${count}`}</h4>
-      <section>
-        <SearchBar
-          search={search}
-          handleChange={handleChange}
-          handleClick={handleClick}
-          handleSort={handleSort}
-        />
-        <div className="cardsWrapper">
-          {filteredUni.map((e, i) => (
-            <UniversityList
-              key={`uni${i}`}
-              uniName={e.name}
-              uniUrl={e.web_pages}
+      {/* <App2 /> */}
+      {error ?? <p>There was an error. Please try again.</p>}
+      {!error ?? (
+        <>
+          <h4>{`Counter: ${count}`}</h4>
+          <section>
+            <SearchBar
+              search={search}
+              handleChange={handleChange}
+              handleClick={handleClick}
+              handleSort={handleSort}
             />
-          ))}
-        </div>
-      </section>
+            <div className="cardsWrapper">
+              {filteredUni.map((e, i) => (
+                <UniversityList
+                  key={`uni${i}`}
+                  uniName={e.name}
+                  uniUrl={e.web_pages}
+                />
+              ))}
+            </div>
+          </section>
+        </>
+      )}
     </>
   );
 }
