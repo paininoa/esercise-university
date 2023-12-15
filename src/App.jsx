@@ -9,7 +9,7 @@ function App() {
   const [search, setSearch] = useState("");
   const [filteredUni, setFilteredUni] = useState([]);
   const [count, setCount] = useState(0);
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");  // PER GESTIRE ERRORI MA QUALCOSA NON VA----------------
 
   const handleChange = (searchValue) => {
     setSearch(searchValue);
@@ -45,15 +45,15 @@ function App() {
       const response = await fetch(
         "http://universities.hipolabs.com/search?country=Italy"
       );
-      if (response.status !== 200) {
-        throw new Error("Fetch error");
-      }
+      // if (response.status !== 200) {           // PER GESTIRE ERRORI MA QUALCOSA NON VA----------------
+      //   throw new Error("Fetch error");
+      // }
       const obj = await response.json();
       setUniversities(obj);
       setFilteredUni(obj);
     } catch (err) {
       console.error(err);
-      setError(err);
+      // setError(err);                 // PER GESTIRE ERRORI MA QUALCOSA NON VA----------------
     }
   };
 
@@ -64,29 +64,29 @@ function App() {
   return (
     <>
       {/* <App2 /> */}
-      {error ?? <p>There was an error. Please try again.</p>}
-      {!error ?? (
-        <>
-          <h4>{`Counter: ${count}`}</h4>
-          <section>
-            <SearchBar
-              search={search}
-              handleChange={handleChange}
-              handleClick={handleClick}
-              handleSort={handleSort}
-            />
-            <div className="cardsWrapper">
-              {filteredUni.map((e, i) => (
-                <UniversityList
-                  key={`uni${i}`}
-                  uniName={e.name}
-                  uniUrl={e.web_pages}
-                />
-              ))}
-            </div>
-          </section>
-        </>
-      )}
+
+      {/* {error ?? <p>There was an error. Please try again.</p>}      PER GESTIRE ERRORI MA QUALCOSA NON VA----------------
+      {!error ?? ()}                                                  PER GESTIRE ERRORI MA QUALCOSA NON VA---------------- */}
+      <>
+        <h4>{`Counter: ${count}`}</h4>
+        <section>
+          <SearchBar
+            search={search}
+            handleChange={handleChange}
+            handleClick={handleClick}
+            handleSort={handleSort}
+          />
+          <div className="cardsWrapper">
+            {filteredUni.map((e, i) => (
+              <UniversityList
+                key={`uni${i}`}
+                uniName={e.name}
+                uniUrl={e.web_pages}
+              />
+            ))}
+          </div>
+        </section>
+      </>
     </>
   );
 }
